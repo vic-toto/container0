@@ -12,9 +12,9 @@ using namespace std;
 // 1. Create RandomAccessIterator class     OK vic
 // 2. Do RandomAccess vector operators      OK vic
 // 3. Vector constructor and destructor     Ok vic
-// 4. vector operators                      Ok sunnycat
-// 5. vector iterators                      Ok sunnycat see vector_iterator.hpp
-// 6. capacity methods                      Ok sunnycat
+// 4. vector operators                      
+// 5. vector iterators                      
+// 6. capacity methods                      
 // 7. element access                        
 // 8. modifiers
 // 9. allocator
@@ -125,9 +125,6 @@ namespace ft
 		typedef	ptrdiff_t									difference_type;
 		typedef	size_t										size_type;
 
-        //typedef ft::vector_iterator<pointer>                iterator;
-		//typedef	ft::vector_iterator<
-
         private:
         pointer         __vector;
         size_t          _capacity;
@@ -235,9 +232,6 @@ namespace ft
 				return true;
 			return false;}
 
-
-			//// CONTINUE CHANGING FROM HERE
-
         void					reserve(size_type n)
         {
 			if (n <= this->capacity())
@@ -274,52 +268,74 @@ namespace ft
         reference				back() { return (this->__vector[this->size() - 1]); };
         const_reference			back() const { return (this->__vector[this->size() - 1]); };
 
+		//Modifiers
         template <class InputIterator>
-        void					assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+        void					assign(InputIterator first, InputIterator last, typename enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
         {
-            this->clear();
-            this->insert(begin(), first, last);
-        };
+			difference_type n = std::distance(first, last);
+			if ((size_type)n > _capacity)
+			{
+				pointer new_vec = _alloc.allocate(n);
+				for (difference_type i = 0; i < n; ++i, ++first)
+					_allocator.construct(new_vec + i, *first);
+				for (size_type i = 0; i < _size; i++)
+					_allocator.destroy(_first + i);
+				if (_capacity)
+					_allocator.deallocate(_first, _capacity);
+				_first = new_vec;
+				_capacity = n;
+			}
+			else
+			{
+				for (difference_type i = 0; i < n; i++)
+					_allocator.destroy(_first + i);
+				for (difference_type i = 0; i < n; i++, first++)
+					_allocator.construct(_first + i, *first);
+			}
+			_size = n;
+		};
+
         void					assign(size_type n, const value_type& val)
         {
-            this->clear();
-            this->insert(begin(), n, val);
+            if (_size < n)
+			{
+				pointer new_vec = _allocator.allocate(n);
+				for (size_type i = 0; i < n; i++)
+					_allocator.construct(new_vec + i, val);
+				for (size_type i = 0; i < _size; i++)
+					_allocator.destroy(_first + i);
+				if (_capacity)
+					_allocator.deallocate(_first, _capacity);
+				_first = new_vec;
+				_capacity = n;
+			}
+			else
+			{
+				for (size_type i = 0; (i < n && i < _size); i++)
+					_allocator.destroy(_first + i);
+				for (size_type i = 0; (i < n && i < _size); i++)
+					_allocator.construct(_first + i, val);
+			}
+			_size = n;
         };
 
         void push_back(const value_type& x)
         {
-            size_type i = 0;
-            if (this->_capacity == 0)
-            {
-                this->reserve(1);
-                this->_size++;
-                this->_allocator.construct(this->__vector, x);
-                return ;
-            }
-            if (this->_size == this->_capacity)
-            {
-                if (this->_capacity == 0)
-                    this->_capacity = 1;
-                T* temp = this->_allocator.allocate(2 * this->_capacity);
-                this->_capacity *= 2;
-                while(i < this->_size)
-                {
-                    this->_allocator.construct(temp + i, this->__vector[i]);
-                    i++;
-                }
-                this->_allocator.deallocate(this->__vector, this->_size);
-                this->__vector = temp;
-            }
-            this->_allocator.construct(this->__vector + this->_size, x);
-            this->_size++;
+			size_type new_cap = _capacity == 0 ? 1 : _capacity * 2:
+			if (_size == _capacity)
+				this->reserve(new_cap);
+			_allocator.construct(__vector + size, x);
+			_size++;
         };
 
         void					pop_back()
         {
-            if (this->size() > 0)
-                this->_size--;
+            _allocator.destroy(__vector + size - 1);
+			_size--;
         };
 
+		//continue here 
+		
         iterator					insert(iterator pos, const value_type &v)
         {
             size_type n = pos - this->begin();
@@ -438,9 +454,10 @@ namespace ft
                 _allocator.destroy(__vector + i);
             this->_size = 0;
         };
+		//Allocator
+        allocator_type			get_allocator() const { return _allocator); };
 
-        allocator_type			get_allocator() const { return (this->_allocator); };
-
+		//Non-member function overloads
     };
 }
 
