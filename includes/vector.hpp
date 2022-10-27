@@ -202,23 +202,48 @@ namespace ft
 
         void					resize (size_type n, value_type val = value_type())
         {
-            while (n < this->size())
-                this->pop_back();
-            while (n > this->size())
-                this->push_back(val);
+           if (n < _size)
+		   {
+			for (size_type i = n; i < _size; i++=
+				_allocator.destroy(__vector + i);)
+		   }
+		   else if (n > _size)
+		   {
+				if (n < _capacity)
+				{
+					pointer new_vec = _allocator.allocate(_capacity * 2 < n ? _capacity + 2 : n)
+					for (size_type i = 0; i < _size; i++)
+						_allocator.construct(new_vec + i, *(__vector + i)
+					for (size_type i = 0; i < _size; i++)
+						_allocator.destroy(_first + i);
+					if (_capacity)
+						_alloc.deallocate(__vector, _capacity);
+					__vector = new_vec;
+					_capacity = _capacity * 2 > n ? _capacity * 2 : n);
+				}
+				for (size_type i = _size; i < n; i++)
+					_allocator.construct(__vector + i, val);
+		   }
+		   _size = n;
         }
 
         // Capacity methods
         size_type				capacity() const { return this->_capacity; };
 
-        bool					empty() const { return (this->_size == 0); };
+        bool					empty() const { 
+			if (!_size)
+				return true;
+			return false;}
+
+
+			//// CONTINUE CHANGING FROM HERE
 
         void					reserve(size_type n)
         {
+			if (n <= this->capacity())
+                return;
             if (n > this->max_size())
                 throw (std::length_error("vector max_size"));
-            if (n <= this->capacity())
-                return;
             pointer tmp = this->_allocator.allocate(n);
             for (size_type i = 0; i < this->size(); i++)
                 tmp[i] = this->__vector[i];
