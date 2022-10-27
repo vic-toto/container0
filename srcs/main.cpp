@@ -294,7 +294,8 @@ void    basic_test()
 {
     std::cout << "_______BASIC TESTING OF VECTOR_______" << std::endl;
 
-    ft::vector<int> v1(5, 10);
+    ft::vector<int> v1;
+	v1.assign(10, 1);
     std::vector <int> v2(5, 10);
     std::cout << "initialised ft::vector v1 and std::vector v2" << std::endl << std::endl;
     std::cout << "v1 size " << v1.size() << std::endl;
