@@ -61,6 +61,10 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "unordered_map": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "__tree": "cpp",
+        "memory_resource": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }

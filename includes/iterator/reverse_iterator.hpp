@@ -7,7 +7,6 @@
 // do member functions
 // non-member function overloads
 
-
 namespace ft
 {
     template <class Iterator>
@@ -25,12 +24,12 @@ namespace ft
 			iterator_type	_ptr;
 
 		public:
-		//Member functions
-		reverse_iterator() : _ptr(nullptr) {
+		//Member functions[
+		reverse_iterator() : _ptr(nullptr) {}
 		explicit reverse_iterator (iterator_type it) : _ptr(it) {}
 		
 		template <class Iter>
-		reverse_iterator (const reverse_iterator<Iter>& rev_it) {_Ptr = rev_it.base(); }
+		reverse_iterator (const reverse_iterator<Iter>& rev_it) {_ptr = rev_it.base(); }
 		iterator_type base() const {return _ptr;};
 		reference operator*() const {iterator_type tmp = _ptr; return (*--tmp);}
 		reverse_iterator operator+(difference_type n) const {return reverse_iterator(_ptr - n);}
@@ -43,16 +42,17 @@ namespace ft
 		reverse_iterator& operator+=(difference_type n) {_ptr -= n; return *this; }
 		reverse_iterator& operator -=(difference_type n) {_ptr += n; return *this; }
 		reverse_iterator& operator-(difference_type n) const {return reverse_iterator(_ptr + n);}
-		reverse_iterator& operator+(difference_type n) const {return reverse_iterator(_ptr - n);}
-		reverse_iterator& operator--(){++_ptr; return (*this;}
+		//reverse_iterator& operator+(difference_type n) const {return reverse_iterator(_ptr - n);}
+		reverse_iterator& operator--(){++_ptr; return (*this);}
 		reverse_iterator& operator--(int){
 			reverse_iterator tmp = *this;
 			--(*this);
-			return tmp:
+			return tmp;
 		}
 		pointer operator->() const {return &(operator*());}
-		reference operator[] (difference_type n) const {return base()[-n-1];}
-		}
+		reference operator[] (difference_type n) const 
+		{
+			return (base()[-n-1]);}
     };
 
 	//non-member functions overload
@@ -76,6 +76,6 @@ namespace ft
 	typename reverse_iterator<Iterator1>::difference_type
 	operator-(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {return y.base() - x.base();}
 	
-}
+};
 
 #endif

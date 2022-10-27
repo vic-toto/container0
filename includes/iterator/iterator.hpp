@@ -3,6 +3,7 @@
 
 #include "../ft_containers.hpp"
 #include <iterator>
+
 namespace   ft
 {
     
@@ -29,15 +30,15 @@ namespace   ft
 	struct iterator_traits<T*> {
 		typedef std::random_access_iterator_tag	iterator_category;
 		typedef T								value_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef T								*pointer;
-		typedef T								&reference;
+		typedef ptrdiff_t					difference_type;
+		typedef T*								pointer;
+		typedef T&								reference;
 	};
 
 	template<class  T>
 	struct iterator_traits<const T*>{
 		typedef T 									value_type;
-		typedef std::ptrdiff_t 						difference_type;
+		typedef ptrdiff_t 						difference_type;
 		typedef std::random_access_iterator_tag 	iterator_category;
 		typedef const T* 							pointer;
 		typedef const T& 							reference;

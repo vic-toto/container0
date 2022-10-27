@@ -16,4 +16,14 @@
 #include <__config>
 #include <cstdlib>
 
+#include "iterator/iterator.hpp"
+#include "iterator/reverse_iterator.hpp"
+#include "iterator/tree_iterator.hpp"
+//#include "iterator/vector_iterator.hpp"
+
+#include "vector.hpp"
+#include "utils.hpp"
+
+#include "tests/test_vector.hpp"
+
 #endif
