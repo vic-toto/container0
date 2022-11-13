@@ -1,7 +1,7 @@
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 
-#include "../ft_containers.hpp"
+#include "../utils.hpp"
 
 //Do declarations
 // do member functions
@@ -41,8 +41,7 @@ namespace ft
 		}
 		reverse_iterator& operator+=(difference_type n) {_ptr -= n; return *this; }
 		reverse_iterator& operator -=(difference_type n) {_ptr += n; return *this; }
-		reverse_iterator& operator-(difference_type n) const {return reverse_iterator(_ptr + n);}
-		//reverse_iterator& operator+(difference_type n) const {return reverse_iterator(_ptr - n);}
+		reverse_iterator operator-(difference_type n) const {return reverse_iterator(_ptr + n);}
 		reverse_iterator& operator--(){++_ptr; return (*this);}
 		reverse_iterator& operator--(int){
 			reverse_iterator tmp = *this;

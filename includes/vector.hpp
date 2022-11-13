@@ -1,12 +1,9 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "ft_containers.hpp"
 #include "utils.hpp"
-#include "/iterator/reverse_iterator.hpp"
-#include <vector>
-#include <iostream>
-#include <sstream>
+#include "iterator/reverse_iterator.hpp"
+
 
 //Dany the cat.. everybody wants to be a cat!
 
@@ -101,19 +98,20 @@ namespace ft
 			typedef	size_t										size_type;
 
   			private:
-  			pointer         									__vector;
-  			size_t          									_capacity;
   			allocator_type 										_allocator;
-  			size_t          									_size;
+  			size_type          									_capacity;
+  			size_type          									_size;
+  			pointer         									__vector;
       
 
         public:
 
         // constructors
-        explicit vector(const allocator_type& alloc = allocator_type()): __vector(0), _size(0), _capacity(0), _allocator(alloc) {return ;}
-        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& allocator = allocator_type()) : _allocator(allocator), _capacity(n), _size(n)
+       explicit vector	(const allocator_type& alloc = allocator_type()) : _allocator(alloc), _capacity(0), _size(0), __vector(0) { return ; }
+		explicit vector	(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _allocator(alloc), _capacity(n), _size(n)
 		{
 			__vector = _allocator.allocate(n);
+
 			for (size_type i = 0; i < n; i++)
 				_allocator.construct(__vector + i, val);
 		}
@@ -177,7 +175,7 @@ namespace ft
            if (n < _size)
 		   {
 			for (size_type i = n; i < _size; i++)
-				_allocator.destroy(__vector + i));
+				_allocator.destroy(__vector + i);
 		   }
 		   else if (n > _size)
 		   {

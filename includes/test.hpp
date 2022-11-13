@@ -1,6 +1,7 @@
 # ifndef TEST_HPP
 #define TEST_HPP
 
+
 #include <vector>
 #include <stack>
 #include <map>
@@ -9,6 +10,8 @@
 #include <iomanip>
 #include <sys/time.h>
 #include <string>
+#include "utils.hpp"
+#include "vector.hpp"
 
 time_t	start1, start2, end1, end2 = 0;
 
