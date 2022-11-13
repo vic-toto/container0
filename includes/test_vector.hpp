@@ -2,6 +2,7 @@
 #define TEST_VECTOR_HPP
 
 #include "ft_containers.hpp"
+
 #pragma region Vector
 
 //test constructor
@@ -14,7 +15,7 @@ std::vector<int> vector_constructor_test_std()
     std::vector<int> tmp1(100, 1), tmp2(100000, 0);
     tmp1 = tmp2;
     std::vector<int> tmp3 = tmp1;
-    std::vector<int> tmp4(tmp.begin(), tmp.end());
+    std::vector<int> tmp4(tmp1.begin(), tmp1.end());
     v.push_back(tmp4.size());
     v.push_back(tmp4.capacity());
     v.push_back(tmp1[2]);
@@ -30,30 +31,33 @@ std::vector<int> vector_constructor_test_std()
     }
     return v;
 }
+
 template <typename T>
 std::vector<int> vector_constructor_test_ft()
 {
     ft::vector<T> vector;
-    ft::vector<int> v;
-    ft::vector<int> tmp0(vector);
-    ft::vector<int> tmp1(100, 1), tmp2(100000, 0);
-    tmp1 = tmp2;
-    ft::vector<int> tmp3 = tmp1;
-    ft::vector<int> tmp4(tmp1.begin(), tmp1.end());
-    v.push_back(tmp4.size());
-    v.push_back(tmp4.capacity());
-    v.push_back(tmp1[2]);
-    v.push_back(tmp3[2]);
-    v.push_back(tmp4[2]);
-    try
-    {
-        ft::vector<int> tmp5(-1, -1);
-    }
-    catch(const std::exception& e)
-    {
-        v.push_back(1);
-    }
-    return v;
+	std::vector<int> v;
+	ft::vector<int> tmp0(vector);
+	ft::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
+	tmp = tmp2;
+	ft::vector<int> tmp3(tmp);
+	start2 = timer();
+	ft::vector<int> tmp4(tmp.begin(), tmp.end());
+	end2 = timer();
+	v.push_back(tmp4.size());
+	v.push_back(tmp4.capacity());
+	v.push_back(tmp[2]);
+	v.push_back(tmp3[2]);
+	v.push_back(tmp4[2]);
+	try
+	{
+		ft::vector<int> tmp5(-1, -1);
+	}
+	catch (std::exception &e)
+	{
+		v.push_back(1);
+	}
+	return v;
 }
 
 template <typename T>
@@ -94,6 +98,7 @@ std::vector<int> vector_iterator_test_std()
 	for (int i = 0; i < 10; ++i)
 		vector.push_back(i);
 	it = vector.begin();
+	start1 = timer();
 	v.push_back(*(++it));
 	v.push_back(*(--it));
 	v.push_back(*(it + 1));
@@ -101,6 +106,7 @@ std::vector<int> vector_iterator_test_std()
 	v.push_back(*(it - 1));
 	it -= 1;
 	v.push_back(*it);
+	end1 = timer();
 	return v;
 }
 
@@ -113,6 +119,7 @@ std::vector<int> vector_iterator_test_ft()
 	for (int i = 0; i < 10; ++i)
 		vector.push_back(i);
 	it = vector.begin();
+	start2 = timer();
 	v.push_back(*(++it));
 	v.push_back(*(--it));
 	v.push_back(*(it + 1));
@@ -120,6 +127,7 @@ std::vector<int> vector_iterator_test_ft()
 	v.push_back(*(it - 1));
 	it -= 1;
 	v.push_back(*it);
+	end2 = timer();
 	return v;
 }
 
@@ -130,8 +138,10 @@ std::vector<int> vector_begin_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	v.push_back(*vector.begin());
 	v.push_back(*++vector.begin());
+	end1 = timer();
 	return v;
 }
 
@@ -141,8 +151,10 @@ std::vector<int> vector_begin_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	v.push_back(*vector.begin());
 	v.push_back(*++vector.begin());
+	end2 = timer();
 	return v;
 }
 
@@ -153,8 +165,10 @@ std::vector<int> vector_end_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	v.push_back(*(vector.end() - 1));
 	v.push_back(*(vector.end() - 2));
+	end1 = timer();
 	return v;
 }
 
@@ -164,8 +178,10 @@ std::vector<int> vector_end_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	v.push_back(*(vector.end() - 1));
 	v.push_back(*(vector.end() - 2));
+	end2 = timer();
 	return v;
 }
 
@@ -176,8 +192,10 @@ std::vector<int> vector_rbegin_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	v.push_back(*vector.rbegin());
 	v.push_back(*(vector.rbegin() + 1));
+	end1 = timer();
 	return v;
 }
 
@@ -187,8 +205,10 @@ std::vector<int> vector_rbegin_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	v.push_back(*vector.rbegin());
 	v.push_back(*(vector.rbegin() + 1));
+	end2 = timer();
 	return v;
 }
 
@@ -199,8 +219,10 @@ std::vector<int> vector_rend_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	v.push_back(*(vector.rend() - 1));
 	v.push_back(*(vector.rend() - 2));
+	end1 = timer();
 	return v;
 }
 
@@ -210,8 +232,10 @@ std::vector<int> vector_rend_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	v.push_back(*(vector.rend() - 1));
 	v.push_back(*(vector.rend() - 2));
+	end2 = timer();
 	return v;
 }
 
@@ -222,7 +246,9 @@ std::vector<int> vector_size_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(12000000, 1);
+	start1 = timer();
 	v.push_back(vector.size());
+	end1 = timer();
 	return v;
 }
 
@@ -232,7 +258,9 @@ std::vector<int> vector_size_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(12000000, 1);
+	start2 = timer();
 	v.push_back(vector.size());
+	end2 = timer();
 	return v;
 }
 
@@ -243,7 +271,9 @@ std::vector<int> vector_maxsize_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1, 1);
+	start1 = timer();
 	v.push_back(vector.max_size());
+	end1 = timer();
 	return v;
 }
 
@@ -253,7 +283,9 @@ std::vector<int> vector_maxsize_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1, 1);
+	start2 = timer();
 	v.push_back(vector.max_size());
+	end2 = timer();
 	return v;
 }
 
@@ -264,6 +296,7 @@ std::vector<int> vector_resize_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(99000000, 1);
+	start1 = timer();
 	vector.resize(50000000);
 	vector.reserve(50000000);
 	v.push_back(vector.size());
@@ -275,6 +308,7 @@ std::vector<int> vector_resize_test_std()
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	v.push_back(vector[65]);
+	end1 = timer();
 	return v;
 }
 
@@ -283,15 +317,16 @@ std::vector<int> vector_resize_test_ft()
 {
 	ft::vector<T> vector;
 	std::vector<int> v;
-	vector.assign(990000, 1);
-	vector.resize(500000);
-	vector.reserve(500000);
+	vector.assign(99000000, 1);
+	start2 = timer();
+	vector.resize(50000000);
+	vector.reserve(50000000);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
-	vector.resize(700000);
+	vector.resize(70000000);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
-	vector.resize(1530000, T());
+	vector.resize(153000000, T());
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	v.push_back(vector[65]);
@@ -306,7 +341,9 @@ std::vector<int> vector_capacity_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(12000000, 1);
+	start1 = timer();
 	v.push_back(vector.capacity());
+	end1 = timer();
 	return v;
 }
 
@@ -316,7 +353,9 @@ std::vector<int> vector_capacity_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(12000000, 1);
+	start2 = timer();
 	v.push_back(vector.capacity());
+	end2 = timer();
 	return v;
 }
 
@@ -327,7 +366,9 @@ std::vector<int> vector_empty_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	v.push_back(vector.empty());
+	end1 = timer();
 	return v;
 }
 
@@ -337,7 +378,9 @@ std::vector<int> vector_empty_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	v.push_back(vector.empty());
+	end2 = timer();
 	return v;
 }
 
@@ -347,7 +390,9 @@ std::vector<int> vector_reserve_test_std()
 {
 	std::vector<T> vector;
 	std::vector<int> v;
+	start1 = timer();
 	vector.reserve(99000000);
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -358,7 +403,9 @@ std::vector<int> vector_reserve_test_ft()
 {
 	ft::vector<T> vector;
 	std::vector<int> v;
+	start2 = timer();
 	vector.reserve(99000000);
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -370,8 +417,10 @@ std::vector<int> vector_operator_assign_test_std()
 {
 	std::vector<T> vector;
 	std::vector<int> v;
-	vector.assign(444, 1);
-	v.push_back(vector[55]);
+	vector.assign(44444, 1);
+	start1 = timer();
+	v.push_back(vector[5555]);
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -382,8 +431,9 @@ std::vector<int> vector_operator_assign_test_ft()
 {
 	ft::vector<T> vector;
 	std::vector<int> v;
-	vector.assign(444, 1);
-	v.push_back(vector[55]);
+	vector.assign(44444, 1);
+	start2 = timer();
+	v.push_back(vector[5555]);
 	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -397,7 +447,9 @@ std::vector<int> vector_at_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(99000000, 1);
+	start1 = timer();
 	v.push_back(vector.at(3540000));
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -409,7 +461,9 @@ std::vector<int> vector_at_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(99000000, 1);
+	start2 = timer();
 	v.push_back(vector.at(3540000));
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -422,7 +476,9 @@ std::vector<int> vector_front_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(44444, 1);
+	start1 = timer();
 	v.push_back(vector.front());
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -434,7 +490,9 @@ std::vector<int> vector_front_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(44444, 1);
+	start2 = timer();
 	v.push_back(vector.front());
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -447,7 +505,9 @@ std::vector<int> vector_back_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(44444, 1);
+	start1 = timer();
 	v.push_back(vector.back());
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -459,7 +519,9 @@ std::vector<int> vector_back_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(44444, 1);
+	start2 = timer();
 	v.push_back(vector.back());
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -475,11 +537,13 @@ std::vector<int> vector_assign_test_std()
 	vector.assign(3, 3);
 	tmp.assign(40000000, 1);
 	tmp2.assign(40000, 1);
+	start1 = timer();
 	vector.assign(tmp.begin(), tmp.end());
 	v.push_back(vector[1]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	vector.assign(tmp2.begin(), tmp2.end());
+	end1 = timer();
 	v.push_back(vector[444]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -495,11 +559,13 @@ std::vector<int> vector_assign_test_ft()
 	vector.assign(3, 3);
 	tmp.assign(40000000, 1);
 	tmp2.assign(40000, 1);
+	start2 = timer();
 	vector.assign(tmp.begin(), tmp.end());
 	v.push_back(vector[1]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	vector.assign(tmp2.begin(), tmp2.end());
+	end2 = timer();
 	v.push_back(vector[444]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -515,7 +581,9 @@ std::vector<int> vector_assign_it_test_std()
 	std::vector<int> tmp;
 	vector.assign(3, 3);
 	tmp.assign(40000000, 1);
+	start1 = timer();
 	vector.assign(tmp.begin(), tmp.end());
+	end1 = timer();
 	for (size_t i = 0; i < tmp.size(); ++i)
 		v.push_back(vector[i]);
 	v.push_back(vector.size());
@@ -531,7 +599,9 @@ std::vector<int> vector_assign_it_test_ft()
 	std::vector<int> tmp;
 	vector.assign(3, 3);
 	tmp.assign(40000000, 1);
+	start2 = timer();
 	vector.assign(tmp.begin(), tmp.end());
+	end2 = timer();
 	for (size_t i = 0; i < tmp.size(); ++i)
 		v.push_back(vector[i]);
 	v.push_back(vector.size());
@@ -545,8 +615,10 @@ std::vector<int> vector_push_back_test_std()
 {
 	std::vector<T> vector;
 	std::vector<int> v;
+	start1 = timer();
 	for (int i = 0; i < 55000000; ++i)
 		vector.push_back(i);
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -557,10 +629,12 @@ std::vector<int> vector_push_back_test_ft()
 {
 	ft::vector<T> vector;
 	std::vector<int> v;
+	start2 = timer();
 	for (int i = 0; i < 55000000; ++i)
 	{
 		vector.push_back(i);
 	}
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	return v;
@@ -573,7 +647,9 @@ std::vector<int> vector_pop_back_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(99000000, 1);
+	start1 = timer();
 	vector.pop_back();
+	end1 = timer();
 	v.push_back(vector[vector.size() - 1]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -586,7 +662,9 @@ std::vector<int> vector_pop_back_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(99000000, 1);
+	start2 = timer();
 	vector.pop_back();
+	end2 = timer();
 	v.push_back(vector[vector.size() - 1]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -600,7 +678,9 @@ std::vector<int> vector_insert_value_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(26000000, 1);
+	start1 = timer();
 	v.push_back(*(vector.insert(vector.end() - 8000000, 44)));
+	end1 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 
@@ -613,7 +693,9 @@ std::vector<int> vector_insert_value_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(26000000, 1);
+	start2 = timer();
 	v.push_back(*(vector.insert(vector.end() - 8000000, 44)));
+	end2 = timer();
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 
@@ -627,7 +709,9 @@ std::vector<int> vector_insert_fill_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start1 = timer();
 	vector.insert(vector.end() - 50, 42000000, 2);
+	end1 = timer();
 	v.push_back(vector[2121]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -640,7 +724,9 @@ std::vector<int> vector_insert_fill_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(1000, 1);
+	start2 = timer();
 	vector.insert(vector.end() - 50, 42000000, 2);
+	end2 = timer();
 	v.push_back(vector[2121]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -656,7 +742,9 @@ std::vector<int> vector_insert_range_test_std()
 	std::vector<int> tmp;
 	tmp.assign(26000000, 1);
 	vector.assign(42000000, 1);
+	start1 = timer();
 	vector.insert(vector.end() - 10000000, tmp.begin(), tmp.end());
+	end1 = timer();
 	v.push_back(vector[3]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -691,7 +779,9 @@ std::vector<int> vector_insert_range_test_ft()
 	ft::vector<int> tmp;
 	tmp.assign(26000000, 1);
 	vector.assign(42000000, 1);
+	start2 = timer();
 	vector.insert(vector.end() - 10000000, tmp.begin(), tmp.end());
+	end2 = timer();
 	v.push_back(vector[3]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -727,7 +817,9 @@ std::vector<int> vector_insert_it_test_std()
 	std::vector<int> tmp;
 	tmp.assign(26000000, 1);
 	vector.assign(42000000, 7);
+	start1 = timer();
 	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+	end1 = timer();
 	for (size_t i = 0; i < tmp.size(); ++i)
 	{
 		v.push_back(vector[i]);
@@ -745,7 +837,9 @@ std::vector<int> vector_insert_it_test_ft()
 	std::vector<int> tmp;
 	tmp.assign(26000000, 1);
 	vector.assign(42000000, 7);
+	start2 = timer();
 	vector.insert(vector.begin(), tmp.begin(), tmp.end());
+	end2 = timer();
 	for (size_t i = 0; i < tmp.size(); ++i)
 	{
 		v.push_back(vector[i]);
@@ -763,7 +857,9 @@ std::vector<int> vector_erase_value_test_std()
 	std::vector<int> v;
 	for (int i = 0; i < 99000000; ++i)
 		vector.push_back(i);
+	start1 = timer();
 	v.push_back(*(vector.erase(vector.begin() + 80000)));
+	end1 = timer();
 	v.push_back(*(vector.begin() + 820000));
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -777,7 +873,9 @@ std::vector<int> vector_erase_value_test_ft()
 	std::vector<int> v;
 	for (int i = 0; i < 99000000; ++i)
 		vector.push_back(i);
+	start2 = timer();
 	v.push_back(*(vector.erase(vector.begin() + 80000)));
+	end2 = timer();
 	v.push_back(*(vector.begin() + 820000));
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -792,7 +890,9 @@ std::vector<int> vector_erase_range_test_std()
 	std::vector<int> v;
 	for (int i = 0; i < 99000000; ++i)
 		vector.push_back(i);
+	start1 = timer();
 	v.push_back(*(vector.erase(vector.begin() + 80000, vector.end() - 15000000)));
+	end1 = timer();
 	v.push_back(*(vector.begin() + 820000));
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -806,7 +906,9 @@ std::vector<int> vector_erase_range_test_ft()
 	std::vector<int> v;
 	for (int i = 0; i < 99000000; ++i)
 		vector.push_back(i);
+	start2 = timer();
 	v.push_back(*(vector.erase(vector.begin() + 80000, vector.end() - 15000000)));
+	end2 = timer();
 	v.push_back(*(vector.begin() + 820000));
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -821,6 +923,7 @@ std::vector<int> vector_swap_test_std()
 	std::vector<int> v;
 	vector.assign(11000000, 11);
 	std::vector<int> tmp(5000000, 5), tmp2(10000000, 10), tmp3(15000000, 15), tmp4(30000000, 30);
+	start1 = timer();
 	v.push_back(vector[2]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -841,6 +944,7 @@ std::vector<int> vector_swap_test_std()
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
 	std::swap(vector, tmp4);
+	end1 = timer();
 	v.push_back(vector[2]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -854,6 +958,7 @@ std::vector<int> vector_swap_test_ft()
 	std::vector<int> v;
 	vector.assign(11000000, 11);
 	ft::vector<int> tmp(5000000, 5), tmp2(10000000, 10), tmp3(15000000, 15), tmp4(30000000, 30);
+	start2 = timer();
 	v.push_back(vector[2]);
 	v.push_back(vector.size());
 	v.push_back(vector.capacity());
@@ -888,7 +993,9 @@ std::vector<int> vector_clear_test_std()
 	std::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(50000000, 1);
+	start1 = timer();
 	vector.clear();
+	end1 = timer();
 	v.push_back(vector.capacity());
 	v.push_back(vector.size());
 	return v;
@@ -900,7 +1007,9 @@ std::vector<int> vector_clear_test_ft()
 	ft::vector<T> vector;
 	std::vector<int> v;
 	vector.assign(50000000, 1);
+	start2 = timer();
 	vector.clear();
+	end2 = timer();
 	v.push_back(vector.capacity());
 	v.push_back(vector.size());
 	return v;
@@ -925,8 +1034,5 @@ bool vector_operator_less_equal_test();
 bool vector_operator_more_equal_test();
 
 #pragma endregion
-
-#endif
-
 
 #endif

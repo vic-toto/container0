@@ -67,6 +67,9 @@
         "map": "cpp",
         "set": "cpp",
         "__functional_03": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     }
 }

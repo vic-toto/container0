@@ -1,55 +1,202 @@
 #include "../includes/ft_containers.hpp"
 //using namespace ft;
 
-void    basic_test()
+#pragma region Vector
+
+//test operator ==
+bool	vector_operator_equal_test()
 {
-    std::cout << "_______TESTING CONSTRUCTION OF VECTOR_______" << std::endl;
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 == v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 == v_int2);
+	result.push_back(v_int1 == v_int3);
+	result.push_back(v_str1 == v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 == V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 == V_int2);
+	result2.push_back(V_int1 == V_int3);
+	result2.push_back(V_str1 == V_str2);
+	return result == result2;
+}
 
-	ft::vector<T> vector; 
-	std::vector<int> v;
-	ft::vector<int> tmp0(vector);
-	ft::vector <int> tmp1(100, 4), tmp2(25890, 5);
-	tmp1 = tmp2; 
+//test operator !=
+bool	vector_operator_not_equal_test()
+{
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 != v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 != v_int2);
+	result.push_back(v_int1 != v_int3);
+	result.push_back(v_str1 != v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 != V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 != V_int2);
+	result2.push_back(V_int1 != V_int3);
+	result2.push_back(V_str1 != V_str2);
+	return result == result2;
+}
 
-	
-    ft::vector<int> v1(5, 10);
-    std::vector <int> v2(5, 10);
-	v1.push_back
-    std::cout << "initialised ft::vector v1 and std::vector v2" << std::endl << std::endl;
-    std::cout << "v1 size " << v1.size() << std::endl;
-    std::cout << "v2 size " << v2.size() << std::endl << std::endl; 
-    std::cout << "v1 max_size " << v1.max_size() << std::endl;
-    std::cout << "v2 maz_size " << v2.max_size() << std::endl << std::endl;
+//test operator <
+bool	vector_operator_less_test()
+{
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 < v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 < v_int2);
+	result.push_back(v_int1 < v_int3);
+	result.push_back(v_str1 < v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 < V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 < V_int2);
+	result2.push_back(V_int1 < V_int3);
+	result2.push_back(V_str1 < V_str2);
+	return result == result2;
+}
 
-    std::cout << "TESTING VECTOR ITERATORS" << std::endl;
-   
-    for (ft::vector<int>::iterator it1 = v1.begin(); it1 != v1.end(); ++it1)
-        std::cout << "vec1 *it 1 = " << *it1 << std::endl;
-    for ( std::vector<int>::iterator it2 = v2.begin(); it2 != v2.end(); ++it2)
-        std::cout << "vec2 *it 2 = " << *it2 << std::endl;
+//test operator <=
+bool	vector_operator_less_equal_test()
+{
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 <= v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 <= v_int2);
+	result.push_back(v_int1 <= v_int3);
+	result.push_back(v_str1 <= v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 <= V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 <= V_int2);
+	result2.push_back(V_int1 <= V_int3);
+	result2.push_back(V_str1 <= V_str2);
+	return result == result2;
+}
 
+// test operator >
+bool	vector_operator_more_test()
+{
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 > v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 > v_int2);
+	result.push_back(v_int1 > v_int3);
+	result.push_back(v_str1 > v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 > V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 > V_int2);
+	result2.push_back(V_int1 > V_int3);
+	result2.push_back(V_str1 > V_str2);
+	return result == result2;
+}
 
-
-	ft::vector<T> vector;
-	std::vector<int> v;
-	ft::vector<int> tmp0(vector);
-	ft::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
-	tmp = tmp2;
-	ft::vector<int> tmp3(tmp);
-	ft::vector<int> tmp4(tmp.begin(), tmp.end());
-	v.push_back(tmp4.size());
-	v.push_back(tmp4.capacity());
-	v.push_back(tmp[2]);
-	v.push_back(tmp3[2]);
-	v.push_back(tmp4[2]);
-	try
-	{
-		ft::vector<int> tmp5(-1, -1);
-	}
-	catch (std::exception &e)
-	{
-		v.push_back(1);
-	}
-	return v;
-
+// test operator >=
+bool	vector_operator_more_equal_test()
+{
+	start2 = timer();
+	end2 = timer();
+	start1 = timer();
+	end1 = timer();
+	std::vector<int> result, result2;
+	std::vector<int> v_int1, v_int2, v_int3;
+	std::vector<std::string> v_str1, v_str2;
+	ft::vector<int> V_int1, V_int2, V_int3;
+	ft::vector<std::string> V_str1, V_str2;
+	v_int1.push_back(1);
+	v_int3.push_back(1);
+	v_str1.push_back("a");
+	v_str2.push_back("b");
+	result.push_back(v_int1 >= v_int2);
+	v_int2.push_back(2);
+	result.push_back(v_int1 >= v_int2);
+	result.push_back(v_int1 >= v_int3);
+	result.push_back(v_str1 >= v_str2);
+	V_int1.push_back(1);
+	V_int3.push_back(1);
+	V_str1.push_back("a");
+	V_str2.push_back("b");
+	result2.push_back(V_int1 >= V_int2);
+	V_int2.push_back(2);
+	result2.push_back(V_int1 >= V_int2);
+	result2.push_back(V_int1 >= V_int3);
+	result2.push_back(V_str1 >= V_str2);
+	return result == result2;
 }

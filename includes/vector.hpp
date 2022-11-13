@@ -21,32 +21,7 @@
 //10. non-member functions overloads
 
 namespace ft
-{//
-    //template <bool Cond, class T = void>
-	//struct enable_if;
-//
-	//template <typename T>
-	//struct enable_if<true, T>
-	//{
-	//	public:
-	//		typedef T 	type;
-	//}
-//
-	//template <class T>
-	//struct is_integral
-	//{
-	//	public:
-	//		typedef bool 	value_type;
-	//		typedef false_type	type;
-//
-	//		static const bool value = false;
-//
-	//		operator value_type()
-	//		{
-	//			return value;
-	//		}
-	//}
-
+{	
 	template < class T, class Alloc = std::allocator<T> >
     class   vector  //: public container;
     {
@@ -66,8 +41,8 @@ namespace ft
 			public:
 				RandomAccessIterator() : _ptr(nullptr) {}
 				RandomAccessIterator(pointer rhs) : _ptr(rhs) {}
-				RandomAccessIterator(const RandomAccessIterator<typename remove_const<value_type>::type > & src) : _ptr(&(*src)) {} //copia: passa come parametro di inizializzazione un altro parametro RandomAccessIterator
-				RandomAccessIterator<value_type> & operator=(RandomAccessIterator<typename remove_const<value_type>::type >const & src) {
+				RandomAccessIterator(const RandomAccessIterator<typename std::remove_const<value_type>::type > & src) : _ptr(&(*src)) {} //copia: passa come parametro di inizializzazione un altro parametro RandomAccessIterator
+				RandomAccessIterator<value_type> & operator=(RandomAccessIterator<typename std::remove_const<value_type>::type >const & src) {
 					_ptr = &(*src);
 					return *this;
 				}
@@ -107,7 +82,7 @@ namespace ft
 			template<class L>
 			friend vector::template RandomAccessIterator<L> operator+(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter + a);}
 			template<class L>
-			friend vector::template RandomAccessIterator<L> operator-(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter - a);};
+			friend vector::template RandomAccessIterator<L> operator-(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter - a);}
 			
   		public:
 			typedef T  							                value_type;
@@ -134,7 +109,7 @@ namespace ft
 
         // constructors
         explicit vector(const allocator_type& alloc = allocator_type()): __vector(0), _size(0), _capacity(0), _allocator(alloc) {return ;}
-        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& allocator = allocator_type()) : _allocator(_allocator), _capacity(n), _size(n)
+        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& allocator = allocator_type()) : _allocator(allocator), _capacity(n), _size(n)
 		{
 			__vector = _allocator.allocate(n);
 			for (size_type i = 0; i < n; i++)
@@ -142,7 +117,7 @@ namespace ft
 		}
        template <class InputIterator>
 	   vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-	   			typename enable_if<!is_integral<InputIterator>::value>::type* = 0) : _allocator(alloc)
+	   			typename enable_if<!std::is_integral<InputIterator>::value>::type* = 0) : _allocator(alloc)
 			{
 				difference_type n = (first - last);
 				_size = static_cast<size_type>(n);
@@ -200,21 +175,21 @@ namespace ft
            if (n < _size)
 		   {
 			for (size_type i = n; i < _size; i++=
-				_allocator.destroy(__vector + i);)
+				_allocator.destroy(__vector + i));
 		   }
 		   else if (n > _size)
 		   {
 				if (n < _capacity)
 				{
-					pointer new_vec = _allocator.allocate(_capacity * 2 < n ? _capacity + 2 : n)
+					pointer new_vec = _allocator.allocate(_capacity * 2 < n ? _capacity + 2 : n);
 					for (size_type i = 0; i < _size; i++)
-						_allocator.construct(new_vec + i, *(__vector + i)
+						_allocator.construct(new_vec + i, *(__vector + i));
 					for (size_type i = 0; i < _size; i++)
-						_allocator.destroy(_first + i);
+						_allocator.destroy(__vector + i);
 					if (_capacity)
-						_alloc.deallocate(__vector, _capacity);
+						_allocator.deallocate(__vector, _capacity);
 					__vector = new_vec;
-					_capacity = _capacity * 2 > n ? _capacity * 2 : n);
+					_capacity = _capacity * 2 > n ? _capacity * 2 : n;
 				}
 				for (size_type i = _size; i < n; i++)
 					_allocator.construct(__vector + i, val);
@@ -274,22 +249,22 @@ namespace ft
 			difference_type n = std::distance(first, last);
 			if ((size_type)n > _capacity)
 			{
-				pointer new_vec = _alloc.allocate(n);
+				pointer new_vec = _allocator.allocate(n);
 				for (difference_type i = 0; i < n; ++i, ++first)
 					_allocator.construct(new_vec + i, *first);
 				for (size_type i = 0; i < _size; i++)
-					_allocator.destroy(_first + i);
+					_allocator.destroy(__vector + i);
 				if (_capacity)
-					_allocator.deallocate(_first, _capacity);
-				_first = new_vec;
+					_allocator.deallocate(__vector, _capacity);
+				__vector = new_vec;
 				_capacity = n;
 			}
 			else
 			{
 				for (difference_type i = 0; i < n; i++)
-					_allocator.destroy(_first + i);
+					_allocator.destroy(__vector + i);
 				for (difference_type i = 0; i < n; i++, first++)
-					_allocator.construct(_first + i, *first);
+					_allocator.construct(__vector + i, *first);
 			}
 			_size = n;
 		}
@@ -302,45 +277,71 @@ namespace ft
 				for (size_type i = 0; i < n; i++)
 					_allocator.construct(new_vec + i, val);
 				for (size_type i = 0; i < _size; i++)
-					_allocator.destroy(_first + i);
+					_allocator.destroy(__vector + i);
 				if (_capacity)
-					_allocator.deallocate(_first, _capacity);
-				_first = new_vec;
+					_allocator.deallocate(__vector, _capacity);
+				__vector = new_vec;
 				_capacity = n;
 			}
 			else
 			{
 				for (size_type i = 0; (i < n && i < _size); i++)
-					_allocator.destroy(_first + i);
+					_allocator.destroy(__vector + i);
 				for (size_type i = 0; (i < n && i < _size); i++)
-					_allocator.construct(_first + i, val);
+					_allocator.construct(__vector + i, val);
 			}
 			_size = n;
         }
 
         void push_back(const value_type& x)
         {
-			size_type new_cap = _capacity == 0 ? 1 : _capacity * 2:
+			size_type new_cap = _capacity == 0 ? 1 : _capacity * 2;
 			if (_size == _capacity)
 				this->reserve(new_cap);
-			_allocator.construct(__vector + size, x);
+			_allocator.construct(__vector + _size, x);
 			_size++;
         }
 
         void					pop_back()
         {
-            _allocator.destroy(__vector + size - 1);
+            _allocator.destroy(__vector + _size - 1);
 			_size--;
         }
 
 		//continue here 
 		
-        iterator					insert(iterator pos, const value_type &v)
-        {
-            size_type n = pos - this->begin();
-            this->insert(pos, 1, v);
-            return (iterator(this->__vector + n));
-        }
+        	iterator insert (iterator position, const value_type& val)
+		{
+			if (position < begin() || position > end())
+				throw std::logic_error("vector");
+			difference_type n = std::distance(begin(), position);
+			if (_size == _capacity)
+			{
+				pointer new_vec = _allocator.allocate(_capacity * 2 + (_capacity == 0));
+				for (difference_type i = 0; i < n; i++)
+					_allocator.construct(new_vec + i, *(__vector + i));
+				for (size_type i = n + 1; i <= _size; i++)
+					_allocator.construct(new_vec + i, *(__vector + i - 1));
+				for (size_type i = 0; i < _size; i++)
+					_allocator.destroy(__vector + i);
+				if (_capacity)
+					_allocator.deallocate(__vector, _capacity);
+				__vector = new_vec;
+				_capacity = _capacity * 2 + (_capacity == 0);
+			}
+			else
+			{
+				for (difference_type i = _size; i > n; i--)
+				{
+					_allocator.construct(__vector + i, *(__vector + i - 1));
+					_allocator.destroy(__vector + i - 1);
+				}
+				_allocator.destroy(__vector + n);
+			}
+			_allocator.construct(__vector + n, val);
+			_size++;
+			return begin() + n;
+		}
 
         void insert (iterator position, size_type n, const value_type& val)
         {
@@ -422,21 +423,19 @@ namespace ft
 
         iterator				erase (iterator first, iterator last)
         {
-            size_type size = last - first;
-            size_type _first = first - begin();
-            size_type  i = _first + size - 1;
+            difference_type pos = std::distance(begin(), first);
+			size_type n = (size_type)std::distance(first, last);
 
-            while (i >= _first && i != 0){
-                _allocator.destroy(__vector + i--);
-            }
-            if (_first == 0)
-                _allocator.destroy(__vector + i--);
-            _size -= size;
-            for (i = i + 1; i < _size; i++){
-                __vector[i] = __vector[i + size];
-            }
-            _size = i;
-            return (first);
+			for (size_type i = pos; i < pos + n + 1 && i + n < _size; i++)
+			{
+				_allocator.destroy(__vector + i);
+				_allocator.construct(__vector + i, *(__vector + i + n));
+			}
+			for (size_type i = pos + n; i < _size; i++)
+				_allocator.destroy(__vector + i);
+			_size -= n;
+
+			return begin() + pos;
         }
 
         void					swap (vector& x)
@@ -454,7 +453,7 @@ namespace ft
             this->_size = 0;
         }
 		//Allocator
-        allocator_type			get_allocator() const { return _allocator); };
+        allocator_type			get_allocator() const { return _allocator;}
 
 		//Non-member function overloads
 		friend bool operator== (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
@@ -471,14 +470,14 @@ namespace ft
 		friend bool operator!= (const vector <T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{
 			if (lhs._size != rhs._size)
-				return (true)
+				return (true);
 			for (size_type i = 0; i < rhs._size; i++)
 				if (lhs[i] != rhs[i])
 					return (true);
 			return (false);
 		}
 		
-		friend bool operator< (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		friend bool operator< (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{
 			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
 			for (size_type i = 0; i < size; i++)
@@ -497,7 +496,7 @@ namespace ft
 				return false;
 		}
 
-		friend bool operator> (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		friend bool operator> (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{
 			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
 			for (size_type i = 0; i < size; i++)
@@ -516,7 +515,7 @@ namespace ft
 				return false;
 		}
 		
-		friend bool operator<= (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		friend bool operator<= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{
 			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
 			for (size_type i = 0; i < size; i++)
@@ -535,7 +534,7 @@ namespace ft
 				return false;
 		}
 
-		friend bool operator>= (const vector<T, Alloc>&lhs, const vector<T, Alloc>& rhs)
+		friend bool operator>= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{
 			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
 			for (size_type i = 0; i < size; i++)
@@ -554,12 +553,12 @@ namespace ft
 				return false;
 		}
 
-		friend vois swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
+		friend void swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
 		{
-			std::swap(y._first, x._first);
+			std::swap(y.__vector, x.__vector);
 			std::swap(y._size, x._size);
 			std::swap(y._capacity, x._capacity);
-			std::swat(y._allocator, x._allocator);
+			std::swap(y._allocator, x._allocator);
 		};
 	};
 

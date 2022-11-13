@@ -5,31 +5,31 @@
 
 namespace ft
 {
-	
-//template <bool Cond, class T = void>
-//	struct enable_if;
-//
-//	template <typename T>
-//	struct enable_if<true, T>
-//	{
-//		public:
-//			typedef T 	type;
-//	};
-//
-//	template <class T>
-//	struct is_integral
-//	{
-//		public:
-//			typedef book 	value_type;
-//			typedef false_type	type;
-//
-//			static const bool value = false;
-//
-//			operator value_type()
-//			{
-//				return value;
-//			}
-//	};
+
+	template <bool Cond, class T = void>
+		struct enable_if;
+
+	template <typename T>
+	struct enable_if<true, T>
+	{
+		public:
+			typedef T 	type;
+	};
+
+	template <class T>
+	struct is_integral
+	{
+		public:
+			typedef bool 	value_type;
+			typedef false_type	type;
+
+			static const bool value = false;
+
+			operator value_type()
+			{
+				return value;
+			}
+	};
 	template<class InputIt1, class InputIt2>
 	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 								InputIt2 first2, InputIt2 last2)

@@ -1,7 +1,5 @@
 #include "../includes/ft_containers.hpp"
 
-#include "tests.hpp"
-
 time_t start1, start2, end1, end2 = 0;
 
 time_t timer()
