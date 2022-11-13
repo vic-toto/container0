@@ -24,6 +24,7 @@
 #include "vector.hpp"
 #include "utils.hpp"
 
-#include "tests/test_vector.hpp"
+#include "test.hpp"
+#include "test_vector.hpp"
 
 #endif

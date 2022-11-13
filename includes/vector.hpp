@@ -4,7 +4,7 @@
 #include "ft_containers.hpp"
 #include <vector>
 #include <iostream>
-using namespace std;
+#include <sstream>
 
 //Dany the cat.. everybody wants to be a cat!
 
@@ -21,37 +21,35 @@ using namespace std;
 //10. non-member functions overloads
 
 namespace ft
-{
-    template <bool Cond, class T = void>
-	struct enable_if;
+{//
+    //template <bool Cond, class T = void>
+	//struct enable_if;
+//
+	//template <typename T>
+	//struct enable_if<true, T>
+	//{
+	//	public:
+	//		typedef T 	type;
+	//}
+//
+	//template <class T>
+	//struct is_integral
+	//{
+	//	public:
+	//		typedef bool 	value_type;
+	//		typedef false_type	type;
+//
+	//		static const bool value = false;
+//
+	//		operator value_type()
+	//		{
+	//			return value;
+	//		}
+	//}
 
-	template <typename T>
-	struct enable_if<true, T>
-	{
-		public:
-			typedef T 	type;
-	};
-
-	template <class T>
-	struct is_integral
-	{
-		public:
-			typedef bool 	value_type;
-			typedef false_type	type;
-
-			static const bool value = false;
-
-			operator value_type()
-			{
-				return value;
-			}
-	};
-
-	template <class T, class Alloc = std::allocator<T> >
+	template < class T, class Alloc = std::allocator<T> >
     class   vector  //: public container;
     {
-      
-
 		public:
 		template<typename IterT>
 		class RandomAccessIterator
@@ -109,27 +107,27 @@ namespace ft
 			template<class L>
 			friend vector::template RandomAccessIterator<L> operator+(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter + a);}
 			template<class L>
-			friend vector::template RandomAccessIterator<L> operator-(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter - a);}
+			friend vector::template RandomAccessIterator<L> operator-(const typename vector::template RandomAccessIterator<L>::difference_type & a, const vector::template RandomAccessIterator<L> &iter){return (iter - a);};
 			
-  public:
-		typedef T  							                value_type;
-        typedef Alloc                                       allocator_type;
-        typedef typename allocator_type::pointer            pointer;
-		typedef	typename allocator_type::const_pointer		const_pointer;
-        typedef typename allocator_type::reference          reference;
-        typedef typename allocator_type::const_reference    const_reference;
-		typedef	RandomAccessIterator<value_type>			iterator;
-		typedef	RandomAccessIterator<const value_type>		const_iterator;
-		typedef	reverse_iterator<const_iterator>			const_reverse_iterator;
-		typedef	reverse_iterator<iterator>					reverse_iterator;
-		typedef	ptrdiff_t									difference_type;
-		typedef	size_t										size_type;
+  		public:
+			typedef T  							                value_type;
+  			typedef Alloc                                       allocator_type;
+  			typedef typename allocator_type::pointer            pointer;
+			typedef	typename allocator_type::const_pointer		const_pointer;
+  			typedef typename allocator_type::reference          reference;
+  			typedef typename allocator_type::const_reference    const_reference;
+			typedef	RandomAccessIterator<value_type>			iterator;
+			typedef	RandomAccessIterator<const value_type>		const_iterator;
+			typedef	reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef	reverse_iterator<iterator>					reverse_iterator;
+			typedef	ptrdiff_t									difference_type;
+			typedef	size_t										size_type;
 
-        private:
-        pointer         __vector;
-        size_t          _capacity;
-        allocator_type _allocator;
-        size_t          _size;
+  			private:
+  			pointer         									__vector;
+  			size_t          									_capacity;
+  			allocator_type 										_allocator;
+  			size_t          									_size;
       
 
         public:
@@ -194,8 +192,8 @@ namespace ft
 		const_reverse_iterator rend() const {return const_reverse_iterator(begin()); }
 
         //Capacity 
-        size_type				size() const { return this->_size; };
-        size_type				max_size() const { return this->_allocator.max_size(); };
+        size_type				size() const { return this->_size; }
+        size_type				max_size() const { return this->_allocator.max_size(); }
 
         void					resize (size_type n, value_type val = value_type())
         {
@@ -244,7 +242,7 @@ namespace ft
             this->deallocate();
             this->_capacity = n;
             this->__vector = tmp;
-        };
+        }
 
         reference				operator[] (size_type n) { return (this->__vector[n]); }
         const_reference			operator[] (size_type n) const { return (this->__vector[n]); }
@@ -255,6 +253,7 @@ namespace ft
                 throw std::out_of_range("out of bounds");
             return (this->__vector[n]);
         }
+
         const_reference			at (size_type n) const
         {
             if (n < 0 || n >= this->size())
@@ -262,11 +261,11 @@ namespace ft
             return (this->__vector[n]);
         }
 
-        reference				front() { return (this->__vector[0]); };
-        const_reference			front() const { return (this->__vector[0]); };
+        reference				front() { return (this->__vector[0]); }
+        const_reference			front() const { return (this->__vector[0]); }
 
-        reference				back() { return (this->__vector[this->size() - 1]); };
-        const_reference			back() const { return (this->__vector[this->size() - 1]); };
+        reference				back() { return (this->__vector[this->size() - 1]); }
+        const_reference			back() const { return (this->__vector[this->size() - 1]); }
 
 		//Modifiers
         template <class InputIterator>
@@ -293,7 +292,7 @@ namespace ft
 					_allocator.construct(_first + i, *first);
 			}
 			_size = n;
-		};
+		}
 
         void					assign(size_type n, const value_type& val)
         {
@@ -317,7 +316,7 @@ namespace ft
 					_allocator.construct(_first + i, val);
 			}
 			_size = n;
-        };
+        }
 
         void push_back(const value_type& x)
         {
@@ -326,13 +325,13 @@ namespace ft
 				this->reserve(new_cap);
 			_allocator.construct(__vector + size, x);
 			_size++;
-        };
+        }
 
         void					pop_back()
         {
             _allocator.destroy(__vector + size - 1);
 			_size--;
-        };
+        }
 
 		//continue here 
 		
@@ -419,7 +418,7 @@ namespace ft
                 __vector[i] = __vector[i + 1];
             _allocator.destroy(__vector + i);
             return (position);
-        };
+        }
 
         iterator				erase (iterator first, iterator last)
         {
@@ -453,14 +452,117 @@ namespace ft
             for (size_type i = 0; i < _size; i++)
                 _allocator.destroy(__vector + i);
             this->_size = 0;
-        };
+        }
 		//Allocator
         allocator_type			get_allocator() const { return _allocator); };
 
 		//Non-member function overloads
-    };
+		friend bool operator== (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (lhs._size == rhs._size)
+			{
+				for (size_type i = 0; i < rhs._size; i++)
+					if (lhs[i] != rhs[i])
+						return (false);
+			return (false);
+			}
+		}
+
+		friend bool operator!= (const vector <T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (lhs._size != rhs._size)
+				return (true)
+			for (size_type i = 0; i < rhs._size; i++)
+				if (lhs[i] != rhs[i])
+					return (true);
+			return (false);
+		}
+		
+		friend bool operator< (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		{
+			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
+			for (size_type i = 0; i < size; i++)
+			{
+				if (lhs[i] != rhs[i])
+				{
+					if (lhs[i] < rhs[i])
+						return (true);
+					else
+						return (false);
+				}
+			}
+			if (lhs._size < rhs._size)
+				return true;
+			else
+				return false;
+		}
+
+		friend bool operator> (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		{
+			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
+			for (size_type i = 0; i < size; i++)
+			{
+				if (lhs[i] != rhs[i])
+				{
+					if (lhs[i] > rhs[i])
+						return (true);
+					else
+						return (false);
+				}
+			}
+			if (lhs._size > rhs._size)
+				return true;
+			else
+				return false;
+		}
+		
+		friend bool operator<= (const vector<T, Alloc>% lhs, const vector<T, Alloc>& rhs)
+		{
+			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
+			for (size_type i = 0; i < size; i++)
+			{
+				if (lhs[i] != rhs[i])
+				{
+					if (lhs[i] < rhs[i])
+						return (true);
+					else
+						return (false);
+				}
+			}
+			if (lhs._size <= rhs._size)
+				return true;
+			else
+				return false;
+		}
+
+		friend bool operator>= (const vector<T, Alloc>&lhs, const vector<T, Alloc>& rhs)
+		{
+			size_type size = lhs._size < rhs._size ? lhs._size : rhs._size;
+			for (size_type i = 0; i < size; i++)
+			{
+				if (lhs[i] != rhs[i])
+				{
+					if (lhs[i] < rhs[i])
+						return (true);
+					else
+						return (false);
+				}
+			}
+			if (lhs._size >= rhs._size)
+				return true;
+			else
+				return false;
+		}
+
+		friend vois swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
+		{
+			std::swap(y._first, x._first);
+			std::swap(y._size, x._size);
+			std::swap(y._capacity, x._capacity);
+			std::swat(y._allocator, x._allocator);
+		};
+	};
+
 }
-
-
 
 #endif
