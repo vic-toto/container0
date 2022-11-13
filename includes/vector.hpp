@@ -2,6 +2,8 @@
 # define VECTOR_HPP
 
 #include "ft_containers.hpp"
+#include "utils.hpp"
+#include "/iterator/reverse_iterator.hpp"
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -174,7 +176,7 @@ namespace ft
         {
            if (n < _size)
 		   {
-			for (size_type i = n; i < _size; i++=
+			for (size_type i = n; i < _size; i++)
 				_allocator.destroy(__vector + i));
 		   }
 		   else if (n > _size)
@@ -205,19 +207,20 @@ namespace ft
 				return true;
 			return false;}
 
-        void					reserve(size_type n)
-        {
-			if (n <= this->capacity())
-                return;
-            if (n > this->max_size())
-                throw (std::length_error("vector max_size"));
-            pointer tmp = this->_allocator.allocate(n);
-            for (size_type i = 0; i < this->size(); i++)
-                tmp[i] = this->__vector[i];
-            this->deallocate();
-            this->_capacity = n;
-            this->__vector = tmp;
-        }
+    	void reserve (size_type n)
+		{
+			if (n <= _capacity)
+				return;
+			pointer new_vec = _allocator.allocate(n);
+			for (size_type i = 0; i < _size; i++)
+				_allocator.construct(new_vec + i, *(__vector + i));
+			for (size_type i = 0; i < _size; i++)
+				_allocator.destroy(__vector + i);
+			if (_capacity)
+				_allocator.deallocate(__vector, _capacity);
+			__vector = new_vec;
+			_capacity = n;
+		}
 
         reference				operator[] (size_type n) { return (this->__vector[n]); }
         const_reference			operator[] (size_type n) const { return (this->__vector[n]); }
@@ -244,7 +247,7 @@ namespace ft
 
 		//Modifiers
         template <class InputIterator>
-        void					assign(InputIterator first, InputIterator last, typename enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+        void					assign(InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = 0)
         {
 			difference_type n = std::distance(first, last);
 			if ((size_type)n > _capacity)

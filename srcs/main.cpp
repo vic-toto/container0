@@ -2,8 +2,8 @@
 
 void	vector_tester()
 {
-	std::cout << '__     __             _                ' << std::endl;
-	std::cout << '\\ \\   / /  ___   ___ | |_   ___   _ __ ' << std::endl;
+	std::cout << "__     __             _                " << std::endl;
+	std::cout << "\\ \\   / /  ___   ___ | |_   ___   _ __ " << std::endl;
 	std::cout << " \\ \\ / /  / _ \\ / __|| __| / _ \\ | '__|" << std::endl;
 	std::cout << "  \\ V /  |  __/| (__ | |_ | (_) || |   " << std::endl;
 	std::cout << "   \\_/    \\___| \\___| \\__| \\___/ |_|   " << std::endl;
