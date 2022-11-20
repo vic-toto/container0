@@ -12,6 +12,7 @@
 #include <string>
 #include "utils.hpp"
 #include "vector.hpp"
+#include "stack.hpp"
 
 extern time_t	start1, start2, end1, end2;
 
@@ -52,6 +53,17 @@ public:
 	A() : B(){};
 	A(const B *ex);
 	~A();
+};
+
+class StackBoolTest
+{
+public:
+	std::stack<int> s1, s2, s3, s4;
+	std::stack<std::string> s5, s6, s7, s8, s9;
+	ft::stack<int> st1, st2, st3, st4;
+	ft::stack<std::string> st5, st6, st7, st8, st9;
+
+	StackBoolTest();
 };
 
 #endif

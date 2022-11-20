@@ -102,3 +102,27 @@ A::~A()
 	delete this->l;
 	this->l = nullptr;
 };
+
+StackBoolTest::StackBoolTest()
+{
+	s1.push(2);
+	st1.push(2);
+	s2.push(3);
+	st2.push(3);
+	s3.push(3);
+	st3.push(3);
+	s4.push(4);
+	st4.push(4);
+	s4.push(4);
+	st4.push(4);
+	s5.push("122");
+	st5.push("122");
+	s6.push("123");
+	st6.push("123");
+	s7.push("124");
+	st7.push("124");
+	s8.push("12");
+	st8.push("12");
+	s9.push("123");
+	st9.push("123");
+};

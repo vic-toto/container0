@@ -1,5 +1,6 @@
 #include "../includes/test_utils.hpp"
 #include "../includes/test_vector.hpp"
+#include "../includes/test_stack.hpp"
 
 void	vector_tester()
 {
@@ -54,8 +55,38 @@ void	vector_tester()
 	std::cout << std::endl;
 }
 
+void	stack_tester()
+{
+	std::cout << " ____   _                 _    " << std::endl;
+	std::cout << "/ ___| | |_   __ _   ___ | | __" << std::endl;
+	std::cout << "\\___ \\ | __| / _` | / __|| |/ /" << std::endl;
+	std::cout << " ___) || |_ | (_| || (__ |   < " << std::endl;
+	std::cout << "|____/  \\__| \\__,_| \\___||_|\\_\\" << std::endl;
+	std::cout << " _____             _                    _           _    _                _              _  " << std::endl;
+	std::cout << "|_   _|  ___  ___ | |_   ___  _ __     / \\     ___ | |_ (_)__   __  __ _ | |_   ___   __| | " << std::endl;
+	std::cout << "  | |   / _ \\/ __|| __| / _ \\| '__|   / _ \\   / __|| __|| |\\ \\ / / / _` || __| / _ \\ / _` | " << std::endl;
+	std::cout << "  | |  |  __/\\__ \\| |_ |  __/| |     / ___ \\ | (__ | |_ | | \\ V / | (_| || |_ |  __/| (_| | " << std::endl;
+	std::cout << "  |_|   \\___||___/ \\__| \\___||_|    /_/   \\_\\ \\___| \\__||_|  \\_/   \\__,_| \\__| \\___| \\__,_| " << std::endl;  
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	run_unit_test("constructor", &stack_constructor_test_std<int>, &stack_constructor_test_ft<int>);
+	run_unit_test("push()", &stack_push_test_std<int>, &stack_push_test_ft<int>);
+	run_unit_test("top()", &stack_top_test_std<int>, &stack_top_test_ft<int>);
+	run_unit_test("pop()", &stack_pop_test_std<int>, &stack_pop_test_ft<int>);
+	run_unit_test("size()", &stack_size_test_std<int>, &stack_size_test_ft<int>);
+	run_unit_test("empty()", &stack_empty_test_std<int>, &stack_empty_test_ft<int>);
+	run_bool_unit_test("operator ==", &stack_stack_equal_test);
+	run_bool_unit_test("operator !=", &stack_stack_not_equal_test);
+	run_bool_unit_test("operator <", &stack_stack_less_than_test);
+	run_bool_unit_test("operator >", &stack_stack_more_than_test);
+	run_bool_unit_test("operator <=", &stack_less_or_equal_test);
+	run_bool_unit_test("operator >=", &stack_more_or_equal_test);
+}
+
 int main()
 {
 	vector_tester();
+	stack_tester();
 	return (0);
 }

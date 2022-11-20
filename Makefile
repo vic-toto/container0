@@ -4,6 +4,7 @@ SRCS =  srcs/main.cpp \
 		srcs/test.cpp \
 		srcs/test_utils.cpp \
 		srcs/test_vector.cpp \
+		srcs/test_stack.cpp \
 		# tests_stack.cpp \
 		# tests_map.cpp \
 		# tests_set.cpp \
