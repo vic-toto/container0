@@ -13,7 +13,7 @@
 #include "utils.hpp"
 #include "vector.hpp"
 
-time_t	start1, start2, end1, end2 = 0;
+extern time_t	start1, start2, end1, end2;
 
 time_t 		timer();
 //print result functions

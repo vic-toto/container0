@@ -78,3 +78,27 @@ int run_bool_unit_test(std::string test_name, bool(func1)())
 
 	return ret;
 }
+
+B::B(const int &ex)
+{
+	this->i = ex;
+	this->l = new char('a');
+};
+B::~B()
+{
+	delete this->l;
+	this->l = nullptr;
+};
+
+A::A(const B *ex)
+{
+	this->l = new char(*(ex->l));
+	this->i = ex->i;
+	if (ex->i == -1)
+		throw "n";
+}
+A::~A()
+{
+	delete this->l;
+	this->l = nullptr;
+};
