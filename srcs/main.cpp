@@ -1,7 +1,7 @@
 #include "../includes/test_utils.hpp"
 #include "../includes/test_vector.hpp"
 #include "../includes/test_stack.hpp"
-
+#include "../includes/test_map.hpp"
 void	vector_tester()
 {
 	std::cout << "__     __             _                " << std::endl;
@@ -84,9 +84,57 @@ void	stack_tester()
 	run_bool_unit_test("operator >=", &stack_more_or_equal_test);
 }
 
+void	map_tester()
+{
+	std::cout << " __  __               " << std::endl;
+	std::cout << "|  \\/  |  __ _  _ __  " << std::endl;
+	std::cout << "| |\\/| | / _` || '_ \\ " << std::endl;
+	std::cout << "| |  | || (_| || |_) |" << std::endl;
+	std::cout << "|_|  |_| \\__,_|| .__/ " << std::endl;
+	std::cout << "               |_|    " << std::endl;
+	std::cout << std::endl;
+	std::cout << " _____             _                    _           _    _                _              _ " << std::endl;
+	std::cout << "|_   _|  ___  ___ | |_   ___  _ __     / \\     ___ | |_ (_)__   __  __ _ | |_   ___   __| |" << std::endl;
+	std::cout << "  | |   / _ \\/ __|| __| / _ \\| '__|   / _ \\   / __|| __|| |\\ \\ / / / _` || __| / _ \\ / _` |" << std::endl;
+	std::cout << "  | |  |  __/\\__ \\| |_ |  __/| |     / ___ \\ | (__ | |_ | | \\ V / | (_| || |_ |  __/| (_| |" << std::endl;
+	std::cout << "  |_|   \\___||___/ \\__| \\___||_|    /_/   \\_\\ \\___| \\__||_|  \\_/   \\__,_| \\__| \\___| \\__,_|" << std::endl;
+	std::cout << std::endl << std::endl;
+	run_unit_test("construcot", &map_copy_constructor_test_std<int, int>, &map_copy_constructor_test_ft<int, int>);
+	run_unit_test("operator =", &map_assign_overload_test_std<int, int>, &map_assign_overload_test_ft<int, int>);
+	run_unit_test("iterators", &map_iterators_test_std<int, int>, &map_iterators_test_ft<int, int>);
+	run_unit_test("reverse iterators ", &map_reverse_iterators_test_std<int, int>, &map_reverse_iterators_test_ft<int, int>);
+	run_unit_test("compare class   ", &map_comparator_test_std<int, int>, &map_comparator_test_ft<int, int>);
+	run_unit_test("intert(value)", &map_insert_test_std<int, int>, &map_insert_test_ft<int, int>);
+	run_unit_test("insert(InputIterator", &map_insert_it_test_std<int, int>, &map_insert_it_test_ft<int, int>);
+	run_unit_test("insert(hint", &map_insert_hint_test_std<int, int>, &map_insert_hint_test_ft<int, int>);
+	run_unit_test("at()", &map_at_test_std<int, int>, &map_at_test_ft<int, int>);
+	run_unit_test("operator []", &map_operator_sq_test_std<int, int>, &map_operator_sq_test_ft<int, int>);
+	run_unit_test("empty()", &map_empty_test_std<int, int>, &map_empty_test_ft<int, int>);
+	run_unit_test("size()", &map_size_test_std<int, int>, &map_size_test_ft<int, int>);
+	run_unit_test("max_size()", &map_max_size_test_std<int, int>, &map_max_size_test_ft<int, int>);
+	run_unit_test("clear()", &map_clear_test_std<int, int>, &map_clear_test_ft<int, int>);
+	run_unit_test("erase(key)", &map_erase_key_test_std<int, int>, &map_erase_key_test_ft<int, int>);
+	run_unit_test("erase(pos)", &map_erase_position_test_std<int, int>, &map_erase_position_test_ft<int, int>);
+	run_unit_test("erase(iterator)", &map_erase_it_test_std<int, int>, &map_erase_it_test_ft<int, int>);
+	run_unit_test("swap()", &map_swap_test_std<int, int>, &map_swap_test_ft<int, int>);
+	run_unit_test("count()", &map_count_test_std<int, int>, &map_count_test_ft<int, int>);
+	run_unit_test("find()", &map_find_test_std<int, int>, &map_find_test_ft<int, int>);
+	run_unit_test("lower_bound()", &map_lower_bound_test_std<int, int>, &map_lower_bound_test_ft<int, int>);
+	run_unit_test("upper_bound()", &map_upper_bound_test_std<int, int>, &map_upper_bound_test_ft<int, int>);
+	run_unit_test("equal_range()", &map_equal_range_test_std<int, int>, &map_equal_range_test_ft<int, int>);
+	run_unit_test("key_compare()", &map_key_comp_test_std<int, int>, &map_key_comp_test_ft<int, int>);
+	run_bool_unit_test("operator ==", &map_equal_test);
+	run_bool_unit_test("operator !=", &map_not_equal_test);
+	run_bool_unit_test("operator <", &map_less_than_test);
+	run_bool_unit_test("operator >", &map_more_than_test);
+	run_bool_unit_test("operator <=", &map_less_or_equal_test);
+	run_bool_unit_test("operator >=", &map_more_or_equal_test);
+}
+
 int main()
 {
 	vector_tester();
 	stack_tester();
+	map_tester();
 	return (0);
 }

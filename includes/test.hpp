@@ -13,6 +13,7 @@
 #include "utils.hpp"
 #include "vector.hpp"
 #include "stack.hpp"
+#include "map.hpp"
 
 extern time_t	start1, start2, end1, end2;
 
@@ -64,6 +65,45 @@ public:
 	ft::stack<std::string> st5, st6, st7, st8, st9;
 
 	StackBoolTest();
+};
+
+template <class T, class V, class C>
+void fillMap(std::map<T, V, C> &mp)
+{
+	mp.insert(std::make_pair(16, 3));
+	mp.insert(std::make_pair(8, 3));
+	mp.insert(std::make_pair(23, 3));
+	mp.insert(std::make_pair(7, 3));
+	mp.insert(std::make_pair(19, 3));
+	mp.insert(std::make_pair(29, 3));
+	mp.insert(std::make_pair(41, 3));
+	mp.insert(std::make_pair(4, 3));
+	mp.insert(std::make_pair(11, 3));
+}
+
+template <class T, class V, class C>
+void fillMap(ft::map<T, V, C> &mp)
+{
+	mp.insert(ft::make_pair(16, 3));
+	mp.insert(ft::make_pair(8, 3));
+	mp.insert(ft::make_pair(23, 3));
+	mp.insert(ft::make_pair(7, 3));
+	mp.insert(ft::make_pair(19, 3));
+	mp.insert(ft::make_pair(29, 3));
+	mp.insert(ft::make_pair(41, 3));
+	mp.insert(ft::make_pair(4, 3));
+	mp.insert(ft::make_pair(11, 3));
+}
+
+class MapBoolTest
+{
+public:
+	std::map<int, int> m1, m2, m3, m4;
+	std::map<std::string, std::string> m5, m6, m7, m8, m9;
+	ft::map<int, int> mp1, mp2, mp3, mp4;
+	ft::map<std::string, std::string> mp5, mp6, mp7, mp8, mp9;
+
+	MapBoolTest();
 };
 
 #endif
