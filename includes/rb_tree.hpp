@@ -2,13 +2,13 @@
 #define RB_TREE_HPP
 
 #include <memory>
-#include "map.hpp"
+#include "pair.hpp"
 #include "reverse_iterator.hpp"
 
-namespace	ft
-
+namespace ft
 {
-	enum RB_tree_color
+
+	enum Rb_tree_color
 	{
 		red = false,
 		black = true
@@ -16,27 +16,34 @@ namespace	ft
 
 	struct Rb_tree_node
 	{
-		RB_tree_color	color;
-		Rb_tree_node	*parent;
-		Rb_tree_node	*left;
-		Rb_tree_node	*right;
+		Rb_tree_color color;
+		Rb_tree_node *parent;
+		Rb_tree_node *left;
+		Rb_tree_node *right;
 
-		static Rb_tree_node *minimum(Rb_tree_node *x){
+		static Rb_tree_node *minimum(Rb_tree_node *x)
+		{
 			while (x->left != 0)
 				x = x->left;
 			return x;
 		}
-		static const Rb_tree_node *minimum(const Rb_tree_node *x){
+
+		static const Rb_tree_node *minimum(const Rb_tree_node *x)
+		{
 			while (x->left != 0)
 				x = x->left;
 			return x;
 		}
-		static Rb_tree_node *maximum(Rb_tree_node *x){
+
+		static Rb_tree_node *maximum(Rb_tree_node *x)
+		{
 			while (x->right != 0)
 				x = x->right;
 			return x;
 		}
-		static const Rb_tree_node *maximum(const Rb_tree_node *x){
+
+		static const Rb_tree_node *maximum(const Rb_tree_node *x)
+		{
 			while (x->right != 0)
 				x = x->right;
 			return x;
@@ -46,35 +53,36 @@ namespace	ft
 	template <typename Value>
 	struct Rb_tree_node_pointer : public Rb_tree_node
 	{
-		typedef	Rb_tree_node_pointer<Value>*	node_pointer;
-		Value	value_field;
+		typedef Rb_tree_node_pointer<Value>*	node_pointer;
+
 		Rb_tree_node_pointer(Value x) : value_field((x)) {}
-		Value	*valptr()	{return std::addressof(value_field);}
-		const Value	*valptr() const {return std::addressof(value_field);}
+		Value value_field;
+
+		Value *valptr() { return std::addressof(value_field); }
+		const Value *valptr() const { return std::addressof(value_field); }
 	};
 
 	template <typename KeyCompare>
 	struct Rb_tree_keyCompare
 	{
-		KeyCompare	keyCompare;
+		KeyCompare keyCompare;
 
 		Rb_tree_keyCompare() : keyCompare() {}
+
 		Rb_tree_keyCompare(const KeyCompare &comp) : keyCompare(comp) {}
 	};
 
 	struct Rb_tree_header
 	{
-		Rb_tree_node	_header;
-		size_t			_size;
-		void reset()
+		Rb_tree_node _header;
+		size_t _size;
+		Rb_tree_header()
 		{
-			_header.parent = 0;
-			_header.left = &_header;
-			_header.right = &_header;
-			_size = 0;
+			_header.color = red;
+			reset();
 		}
 
-			void move_data(Rb_tree_header &from)
+		void move_data(Rb_tree_header &from)
 		{
 			_header.color = from._header.color;
 			_header.parent = from._header.parent;
@@ -86,12 +94,15 @@ namespace	ft
 			from.reset();
 		}
 
-		Rb_tree_header()
+		void reset()
 		{
-			_header.color = red;
-			reset();
+			_header.parent = 0;
+			_header.left = &_header;
+			_header.right = &_header;
+			_size = 0;
 		}
 	};
+
 	Rb_tree_node *Rb_tree_increment(Rb_tree_node *x) throw();
 
 	const Rb_tree_node *Rb_tree_increment(const Rb_tree_node *x) throw();
@@ -111,6 +122,7 @@ namespace	ft
 		typedef Rb_tree_node_pointer<T>* 								node_pointer;
 
 		Rb_tree_node *node;
+
 		Rb_tree_iterator() : node(NULL) {}
 		template <class Node>
 		Rb_tree_iterator(Node x) : node((Rb_tree_node *)x) {}
@@ -146,6 +158,7 @@ namespace	ft
 			node = Rb_tree_decrement(node);
 			return tmp;
 		}
+
 	};
 
 	template <typename T>
@@ -200,7 +213,6 @@ namespace	ft
 
 	};
 
-
 	template<class A, class B>
 	bool operator==(const Rb_tree_iterator<A> &x, const Rb_tree_iterator<B> &y) { return x.node == y.node; }
 	template<class A, class B>
@@ -226,7 +238,7 @@ namespace	ft
 
 	Rb_tree_node *Rb_tree_rebalance_for_erase(Rb_tree_node *const z, Rb_tree_node &header) throw();
 
-		template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+	template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
 	class Rb_tree
 	{
 		typedef typename Alloc::template rebind<Rb_tree_node_pointer<Value> >::other node_allocator;
@@ -463,7 +475,6 @@ namespace	ft
 			return Res(j.node, 0);
 		}
 
-
 		pair<Rb_tree_node *, Rb_tree_node *> get_insert_hint_unique_pos(const_iterator &position, const key_type &k)
 		{
 			typedef pair<Rb_tree_node *, Rb_tree_node *> Res;
@@ -636,7 +647,8 @@ namespace	ft
 				x = y;
 			}
 		}
-			public:
+
+	public:
 		Rb_tree() {}
 
 		Rb_tree(const Compare &comp, const allocator_type &allocator = allocator_type()) : _alloc_node(node_allocator()), impl(comp, allocator_type(allocator)) {}
@@ -924,9 +936,6 @@ namespace	ft
 		}
 
 	};
-
 }
-
-
 
 #endif

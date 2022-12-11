@@ -5,10 +5,8 @@ SRCS =  srcs/main.cpp \
 		srcs/test_utils.cpp \
 		srcs/test_vector.cpp \
 		srcs/test_stack.cpp \
-		# tests_stack.cpp \
-		# tests_map.cpp \
-		# tests_set.cpp \
-		# rb_tree.cpp
+		srcs/test_map.cpp \
+		srcs/rb_tree.cpp
 
 
 INCLUDES = includes/.

@@ -3,66 +3,31 @@
 
 #include <map>
 #include "rb_tree.hpp"
+#include "reverse_iterator.hpp"
+#include "pair.hpp"
 
 namespace   ft
 {
-
-	template <class T1, class T2>
-	struct pair{
-
-		typedef	T1	first_type;
-		typedef	T2	second_type;
-
-		first_type first;
-		second_type	second;
-
-		pair() : first(), second(){}
-		template <class U, class V>
-		pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
-		pair (const pair &p) : first(p.first), second(p.second) {}
-		pair (const first_type &a, second_type &b) : first(a), second(b) {}
-		pair &operator= (const pair& pr)
-		{
-			first = pr.first;
-			second = pr.second;
-			return *this;
-		}
-
-		friend bool operator== (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first == rhs.first && lhs.second == rhs.second}
-		friend bool operator!= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first != rhs.first && lhs.second != rhs.second}
-		friend bool operator< (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first < rhs.first && lhs.second < rhs.second}
-		friend bool operator<= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first <= rhs.first && lhs.second <= rhs.second}
-		friend bool operator> (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first > rhs.first && lhs.second > rhs.second}
-		friend bool operator>= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
-			{ return lhs.first >= rhs.first && lhs.second >= rhs.second}
-	};
-
-	template <class T1, class T2>
-	pair<T1, T2> make_pair(T1 z, T2 y) {return (pair<T1,t2>)(x,y)}
-
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
 	class map
 	{
 		public:
-			typedef Key												key_type;
-			typedef	T												mapped_type;
-			typedef pair<const Key, T>								value_type;
-			typedef	Compare											key_compare;
-			typedef	Alloc											allocator_t;
-			typedef	typename	allocator_type::reference			reference;
-			typedef	typename	allocator_type::const_reference		const_reference;
-			typedef	typename	allocator_type::pointer				pointer;
-			typedef	typename	allocator_type::const_pointer		const_pointer;
-			typedef	reverse_iterator<iterator>						reverse_iterator;
-			typedef	reverse_iterator<const_iterator>				const_reverse_iterator;
-			typedef	ptrdiff_t										difference_type;
-			typedef	size_t											size_type;
-			typedef Rb_tree<key_type, value_type, Select1st<value_type>, key_compare, allocator_type>	tree_type;
+		typedef Key																					key_type;
+		typedef T																					mapped_type;
+		typedef	pair<const Key, T>																	value_type;
+		typedef	Compare																				key_compare;
+		typedef Alloc																				allocator_type;
+		typedef typename allocator_type::reference													reference;
+		typedef typename allocator_type::const_reference											const_reference;
+		typedef typename allocator_type::pointer													pointer;
+		typedef typename allocator_type::const_pointer												const_pointer;
+		typedef Rb_tree<key_type, value_type, Select1st<value_type>, key_compare, allocator_type>	tree_type;
+		typedef typename tree_type::iterator														iterator;
+		typedef typename tree_type::const_iterator													const_iterator;
+		typedef reverse_iterator<const_iterator>													const_reverse_iterator;
+		typedef reverse_iterator<iterator>															reverse_iterator;
+		typedef ptrdiff_t																			difference_type;
+		typedef size_t																				size_type;
 	
 	class value_compare : std::binary_function<value_type,value_type,bool>
 	{
